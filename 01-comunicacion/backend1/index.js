@@ -41,7 +41,10 @@ app.get("/api/products", async (req, res) => {
     { id: 5, category: "Category1", product: "Product5", price: 56, stock: 56 },
   ];
 
-  const response = await fetch("http://localhost:3002/api/products");
+  const apiUrl =
+    process.env.SERVICE_BACKEND2 || "http://localhost:3002/api/products";
+
+  const response = await fetch(apiUrl);
   const data = await response.json().then();
 
   res.json(products.concat(data));
@@ -49,5 +52,6 @@ app.get("/api/products", async (req, res) => {
 
 app.use("**", (req, res) => res.status(404).send("Path not found"));
 
+const port = process.env.PORT ? Number(process.env.PORT) : 3001;
 const server = http.createServer(app);
-server.listen(3001, () => console.log(`Server is running on port 3001`));
+server.listen(port, () => console.log(`Server is running on port ${port}`));

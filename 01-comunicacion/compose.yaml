@@ -1,0 +1,72 @@
+services:
+  frontend:
+    image: frontend:1
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "4000:9000"
+    environment:
+      - PORT=9000
+      - SERVICE_BACKEND1=http://localhost:4001/api/products
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/healthcheck"]
+      interval: 3s
+      timeout: 10s
+      retries: 3
+      start_period: 8s
+    networks:
+      - net-ms
+
+  backend1:
+    image: backend1:1
+    build:
+      context: ./backend1
+      dockerfile: Dockerfile
+    container_name: backend1
+    ports:
+      - "4001:9001"
+    environment:
+      - PORT=9001
+      - SERVICE_BACKEND2=http://backend2:9002/api/products
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9001/healthcheck"]
+      interval: 3s
+      timeout: 10s
+      retries: 3
+      start_period: 8s
+    depends_on:
+      frontend:
+        condition: service_healthy
+    networks:
+      - net-ms
+      - net-ms-1
+
+  backend2:
+    image: backend2:1
+    build:
+      context: ./backend2
+      dockerfile: Dockerfile
+    container_name: backend2
+    environment:
+      - PORT=9002
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9002/healthcheck"]
+      interval: 3s
+      timeout: 10s
+      retries: 3
+      start_period: 8s
+    depends_on:
+      backend1:
+        condition: service_healthy
+    networks:
+      - net-ms-1
+
+networks:
+  net-ms:
+    driver: bridge
+    name: net-ms
+  net-ms-1:
+    driver: bridge
+    name: net-ms-1

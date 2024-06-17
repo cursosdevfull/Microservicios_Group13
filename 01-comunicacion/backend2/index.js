@@ -46,5 +46,6 @@ app.get("/api/products", async (req, res) => {
 
 app.use("**", (req, res) => res.status(404).send("Path not found"));
 
+const port = process.env.PORT ? Number(process.env.PORT) : 3002;
 const server = http.createServer(app);
-server.listen(3002, () => console.log(`Server is running on port 3002`));
+server.listen(port, () => console.log(`Server is running on port ${port}`));
