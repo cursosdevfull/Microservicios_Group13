@@ -13,8 +13,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.9",
+    "@types/uuid": "^10.0.0",
     "gulp": "^5.0.0",
     "gulp-uglify-es": "^3.0.0",
     "nodemon": "^3.1.4",
@@ -22,8 +24,13 @@
     "typescript": "^5.5.2"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "mysql2": "^3.10.1"
+    "mysql2": "^3.10.1",
+    "reflect-metadata": "^0.2.2",
+    "uuid": "^10.0.0"
   }
 }

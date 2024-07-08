@@ -1,8 +1,8 @@
-import express from 'express';
+import express from "express";
 
-import { addHealthcheck } from './core/healthcheck/healthcheck';
-import { interceptorJSONResponse } from './core/interceptors/json.interceptor';
-import { userRouter } from './modules/user/routes';
+import { addHealthcheck } from "./core/healthcheck/healthcheck";
+import { interceptorJSONResponse } from "./core/interceptors/json.interceptor";
+import { userRouter } from "./modules/user/routes";
 
 class App {
   private app: express.Application;
@@ -17,7 +17,7 @@ class App {
 
   private mountMiddlewares(): void {
     this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(express.urlencoded({ extended: false }));
   }
 
   private mountInterceptors(): void {

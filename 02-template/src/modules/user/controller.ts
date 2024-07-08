@@ -1,27 +1,35 @@
-import { Request, Response } from 'express';
+import * as bcrypt from "bcryptjs";
+import { Request, Response } from "express";
+import { v4 as uuidv4 } from "uuid";
 
-import { users } from './data/user.data';
-import { InsertUserUseCase } from './use-cases/insert';
+import { ValidatorService } from "../../core/validator/validator.service";
+import { InsertUserApplication } from "./application/insert-user.application";
+import { User } from "./domain/user";
+import { InsertUserValidator } from "./infrastructure/validators/insert-user.validator";
 
 export class UserController {
-  constructor(private readonly insertUseCase: InsertUserUseCase) {}
+  constructor(private readonly insertApplication: InsertUserApplication) {}
 
   public async getAll(req: Request, res: Response) {
-    res.json(users);
+    //res.json(users);
   }
 
   public async insert(req: Request, res: Response) {
-    const { name, email } = req.body;
+    const { name, email, password, age, gender } = req.body;
+    const errors = await ValidatorService.runValidation(
+      req.body,
+      InsertUserValidator
+    );
+    ValidatorService.showErrors(errors, res);
 
-    const user = this.insertUseCase.handle(name, email);
+    if (errors.length > 0) return false;
 
-    /* const emailFound = users.some((user) => user.email === email);
-    if (!emailFound) {
-      const id = users.length + 1;
-      users.push({ id, name, email });
-      return res.status(201).json({ id, name, email });
-    }
+    const userId = uuidv4();
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = new User(userId, name, email, passwordHash, age, gender);
 
-    return res.status(400).json({ message: "Email already in use" }); */
+    const userInserted = this.insertApplication.handle(user);
+
+    return res.json(userInserted);
   }
 }

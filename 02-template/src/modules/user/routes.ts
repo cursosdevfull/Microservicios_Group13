@@ -1,7 +1,9 @@
-import { Router } from 'express';
+import { Router } from "express";
 
-import { UserController } from './controller';
-import { InsertUserUseCase } from './use-cases/insert';
+import { InsertUserApplication } from "./application/insert-user.application";
+import { UserController } from "./controller";
+import { UserRepository } from "./domain/repositories/user.repository";
+import { UserInfrastructure } from "./infrastructure/user.infrastructure";
 
 class UserRoutes {
   private readonly router: Router;
@@ -12,8 +14,8 @@ class UserRoutes {
   }
 
   private mountRoutes() {
-    this.router.get("/", this.controller.getAll);
-    this.router.post("/", this.controller.insert);
+    this.router.get("/", this.controller.getAll.bind(this.controller));
+    this.router.post("/", this.controller.insert.bind(this.controller));
   }
 
   get getRouter() {
@@ -21,7 +23,8 @@ class UserRoutes {
   }
 }
 
-const useCase = new InsertUserUseCase();
-const controller = new UserController(useCase);
+const repository: UserRepository = new UserInfrastructure();
+const application = new InsertUserApplication(repository);
+const controller = new UserController(application);
 
 export const userRouter = new UserRoutes(controller).getRouter;

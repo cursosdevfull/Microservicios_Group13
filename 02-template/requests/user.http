@@ -1,0 +1,10 @@
+post http://localhost:5000/user
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "prueba@email.com",
+    "password": "ElGigante2024",
+    "age": 20,
+    "gender": "MALE"
+}

@@ -1,7 +1,9 @@
-import dotenv from 'dotenv';
+import "reflect-metadata";
 
-import { app } from './app';
-import { ServerBootstrap } from './bootstrap/server.bootstrap';
+import dotenv from "dotenv";
+
+import { app } from "./app";
+import { ServerBootstrap } from "./bootstrap/server.bootstrap";
 
 dotenv.config();
 
@@ -37,7 +39,7 @@ const shutdownBySignal = (signalName: string) => {
   };
 };
 
-process
+/* process
   .on("SIGINT", shutdownBySignal("SIGINT"))
   .on("SIGTERM", shutdownBySignal("SIGTERM"))
   .on("SIGQUIT", shutdownBySignal("SIGQUIT"))
@@ -48,4 +50,4 @@ process
   .on("SIGILL", shutdownBySignal("SIGILL"))
   .on("exit", shutdownBySignal("exit"))
   .on("uncaughtException", shutdownBySignal("uncaughtException"))
-  .on("unhandledRejection", shutdownBySignal("unhandledRejection"));
+  .on("unhandledRejection", shutdownBySignal("unhandledRejection")); */
