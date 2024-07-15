@@ -3,14 +3,19 @@ import "reflect-metadata";
 import dotenv from "dotenv";
 
 import { app } from "./app";
+import { BrokerBootstrap } from "./bootstrap/broker.bootstrap";
 import { ServerBootstrap } from "./bootstrap/server.bootstrap";
 
 dotenv.config();
 
 const serverBootstrap = new ServerBootstrap(app);
+const brokerBootstrap = new BrokerBootstrap();
 
 (async () => {
-  const listPromises = [serverBootstrap.initialize()];
+  const listPromises = [
+    serverBootstrap.initialize(),
+    brokerBootstrap.initialize(),
+  ];
 
   try {
     await Promise.all(listPromises);

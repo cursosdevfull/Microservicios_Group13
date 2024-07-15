@@ -1,3 +1,3 @@
 export interface IBootstrap {
-  initialize(): Promise<boolean>;
+  initialize(): Promise<boolean | void>;
 }
