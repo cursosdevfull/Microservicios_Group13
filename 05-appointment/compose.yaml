@@ -1,0 +1,48 @@
+services:
+  mysql-server:
+    image: mysql:8
+    container_name: mysql-server
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    env_file:
+      - env/mysql_root.env
+      - env/mysql.env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_interval: 3s
+    volumes:
+      - vol-mysql-server:/var/lib/mysql
+    networks:
+      - net-ms
+
+  mysql-client:
+    image: phpmyadmin
+    container_name: mysql-client
+    ports:
+      - "8080:80"
+    environment:
+      PMA_ARBITRARY: 1
+    restart: unless-stopped
+    depends_on:
+      mysql-server:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_interval: 3s
+    networks:
+      - net-ms
+
+volumes:
+  vol-mysql-server:
+
+networks:
+  net-ms:
+    name: net-ms
+    driver: bridge

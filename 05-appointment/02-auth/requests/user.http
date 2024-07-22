@@ -1,0 +1,18 @@
+post http://localhost:3000/user
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "prueba@email.com",
+    "password": "ElGigante2024"
+}
+
+###
+post http://localhost:3000/user/get-by-email
+Content-Type: application/json
+
+{
+    "email": "prueba@email.com"
+}
+
+

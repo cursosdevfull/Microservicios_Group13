@@ -1,0 +1,37 @@
+{
+  "name": "02-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist cache",
+    "build": "npm run clean && tsc && gulp minify",
+    "start": "node dist/index.js",
+    "start:dev": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.9",
+    "@types/uuid": "^10.0.0",
+    "gulp": "^5.0.0",
+    "gulp-uglify-es": "^3.0.0",
+    "nodemon": "^3.1.4",
+    "rimraf": "^5.0.7",
+    "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "express": "^4.19.2",
+    "mysql2": "^3.10.3",
+    "neverthrow": "^7.0.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20",
+    "uuid": "^10.0.0"
+  }
+}
