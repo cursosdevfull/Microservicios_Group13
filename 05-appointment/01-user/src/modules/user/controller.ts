@@ -1,15 +1,15 @@
-import * as bcrypt from "bcryptjs";
-import { Request, Response } from "express";
-import { v4 as uuidv4 } from "uuid";
+import * as bcrypt from 'bcryptjs';
+import { Request, Response } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 
-import { ErrorBase } from "../../core/errors/error-base";
-import { ValidatorService } from "../../core/validator/validator.service";
-import { GetUserByEmailApplication } from "./application/get-user-by-email.application";
-import { InsertUserApplication } from "./application/insert-user.application";
-import { UserProperties } from "./domain/user";
-import { UserFactory } from "./domain/user.factory";
-import { GetUserByEmailValidator } from "./infrastructure/validators/get-user-by-email.validator";
-import { InsertUserValidator } from "./infrastructure/validators/insert-user.validator";
+import { ErrorBase } from '../../core/errors/error-base';
+import { ValidatorService } from '../../core/validator/validator.service';
+import { GetUserByEmailApplication } from './application/get-user-by-email.application';
+import { InsertUserApplication } from './application/insert-user.application';
+import { UserProperties } from './domain/user';
+import { UserFactory } from './domain/user.factory';
+import { GetUserByEmailValidator } from './infrastructure/validators/get-user-by-email.validator';
+import { InsertUserValidator } from './infrastructure/validators/insert-user.validator';
 
 export class UserController {
   constructor(
@@ -19,6 +19,7 @@ export class UserController {
 
   public async getByEmail(req: Request, res: Response) {
     const { email } = req.body;
+    console.log("req.body", req.body);
     const errors = await ValidatorService.runValidation(
       req.body,
       GetUserByEmailValidator
@@ -32,6 +33,8 @@ export class UserController {
     if (userFound instanceof ErrorBase) {
       return res.status(userFound.status).json({ messages: userFound.stack });
     }
+
+    console.log("userFound", userFound);
 
     return res.json(userFound);
   }

@@ -2,7 +2,7 @@ import express from 'express';
 
 import { addHealthcheck } from './core/healthcheck/healthcheck';
 import { interceptorJSONResponse } from './core/interceptors/json.interceptor';
-import { authRouter } from './modules/auth/routes';
+import { appointmentRouter } from './modules/appointment/routes';
 
 class App {
   private app: express.Application;
@@ -29,7 +29,7 @@ class App {
   }
 
   private mountRoutes(): void {
-    this.app.use("/auth", authRouter);
+    this.app.use("/appointment", appointmentRouter);
   }
 
   get getApplication() {

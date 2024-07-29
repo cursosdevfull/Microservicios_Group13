@@ -39,6 +39,51 @@ services:
     networks:
       - net-ms
 
+  user_ms:
+    image: user_ms
+    build:
+      context: ./01-user
+      dockerfile: Dockerfile
+    container_name: user_ms
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+    env_file:
+      - env/mysql.env
+      - env/ms.env
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_interval: 3s
+    networks:
+      - net-ms
+
+  auth_ms:
+    image: auth_ms
+    build:
+      context: ./02-auth
+      dockerfile: Dockerfile
+    container_name: auth_ms
+    ports:
+      - "3010:3010"
+    environment:
+      PORT: 3010
+    env_file:
+      - env/mysql.env
+      - env/ms.env
+      - env/auth_ms.env
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:3010/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_interval: 3s
+    networks:
+      - net-ms
+
 volumes:
   vol-mysql-server:
 

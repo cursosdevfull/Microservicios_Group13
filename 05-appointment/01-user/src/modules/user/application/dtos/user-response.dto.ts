@@ -1,6 +1,6 @@
-import { Expose, plainToInstance } from "class-transformer";
+import { Expose, plainToInstance } from 'class-transformer';
 
-import { User } from "../../domain/user";
+import { User } from '../../domain/user';
 
 export class UserResponse {
   @Expose()
@@ -25,6 +25,9 @@ export class UserResponseWithPassword {
 
   @Expose()
   password!: string;
+
+  @Expose()
+  refreshToken: string;
 }
 
 export class UserResponseDto {

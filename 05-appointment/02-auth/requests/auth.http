@@ -1,0 +1,27 @@
+post http://localhost:3000/user
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "prueba@email.com",
+    "password": "ElGigante2024"
+}
+
+###
+post http://localhost:3010/auth/login
+Content-Type: application/json
+
+{
+    "email": "prueba@email.com",
+    "password": "ElGigante2024"
+}
+
+###
+post http://localhost:3010/auth/validate-token
+Content-Type: application/json
+
+{
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE3MjIxMjQ0OTIsImV4cCI6MTcyMjEzODg5Mn0.PNwXhAKvWvgsv4rNUc5bXQ53TUc3-Rsh2N3N8LgILE8"
+}
+
+

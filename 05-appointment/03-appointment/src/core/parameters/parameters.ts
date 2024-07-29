@@ -1,3 +1,5 @@
+import { AppointmentEntity } from "../../modules/appointment/infrastructure/entities/appoitment.entity";
+
 export interface IDatabaseConfig {
   host: string;
   port: number;
@@ -13,7 +15,7 @@ export interface IDatabaseConfig {
 
 export class Parameters {
   static get port() {
-    return process.env.PORT ? Number(process.env.PORT) : 3010;
+    return process.env.PORT ? Number(process.env.PORT) : 3020;
   }
 
   static get hostname(): string {
@@ -24,7 +26,7 @@ export class Parameters {
     return {
       host: process.env.DB_HOST || "localhost",
       port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
-      entities: [],
+      entities: [AppointmentEntity],
       username: process.env.MYSQL_USER || "root",
       password: process.env.MYSQL_PASSWORD || "root",
       database: process.env.MYSQL_DATABASE || "appointment",
@@ -37,19 +39,5 @@ export class Parameters {
         ? Number(process.env.DB_MAX_QUERY_EXECUTION_TIME)
         : 1000,
     };
-  }
-
-  static get USER_BACKEND(): string {
-    return process.env.USER_BACKEND || "http://localhost:3000";
-  }
-
-  static get ACCESS_TOKEN_SECRET(): string {
-    return (
-      process.env.ACCESS_TOKEN_SECRET || "1eec19fe-0b50-46db-ba83-e770534e7ff1"
-    );
-  }
-
-  static get TOKEN_EXPIRATION(): string {
-    return process.env.TOKEN_EXPIRATION || "4h";
   }
 }

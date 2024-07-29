@@ -1,6 +1,5 @@
-import { AuthLoginResult } from "../../infrastructure/auth.infrastructure";
-import { Auth } from "../auth";
+import { AuthSearchUserByEmail } from '../../infrastructure/auth.infrastructure';
 
 export interface AuthRepository {
-  login(Auth: Auth): Promise<AuthLoginResult>;
+  searchUserByEmail(email: string): Promise<AuthSearchUserByEmail>;
 }
