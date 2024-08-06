@@ -52,6 +52,9 @@ services:
     env_file:
       - env/mysql.env
       - env/ms.env
+    depends_on:
+      mysql-server:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "http://localhost:3000/health"]
       interval: 10s
@@ -68,19 +71,204 @@ services:
       dockerfile: Dockerfile
     container_name: auth_ms
     ports:
-      - "3010:3010"
+      - "3001:3001"
     environment:
-      PORT: 3010
+      PORT: 3001
     env_file:
       - env/mysql.env
       - env/ms.env
       - env/auth_ms.env
+    depends_on:
+      mysql-server:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "http://localhost:3010/health"]
+      test: ["CMD", "curl", "http://localhost:3001/health"]
       interval: 10s
       timeout: 5s
       retries: 3
       start_interval: 3s
+    networks:
+      - net-ms
+
+  appoinment_ms:
+    image: appointment_ms
+    build:
+      context: ./03-appointment
+      dockerfile: Dockerfile
+    container_name: appointment_ms
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: 3002
+      KAFKA_GROUP_ID: appointment_group_ms
+    env_file:
+      - env/mysql.env
+      - env/ms.env
+      - env/kafka.env
+    depends_on:
+      mysql-server:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:3002/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_interval: 3s
+    networks:
+      - net-ms
+
+  appoinment_pe_ms:
+    image: appointment_pe_ms
+    build:
+      context: ./04-appointment-pe
+      dockerfile: Dockerfile
+    container_name: appointment_pe_ms
+    ports:
+      - "3003:3003"
+    environment:
+      PORT: 3003
+      KAFKA_GROUP_ID: appointment_group_pe_ms
+    env_file:
+      - env/mysql.env
+      - env/ms.env
+      - env/kafka.env
+    depends_on:
+      mysql-server:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:3003/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_interval: 3s
+    networks:
+      - net-ms
+
+  appoinment_co_ms:
+    image: appointment_co_ms
+    build:
+      context: ./05-appointment-co
+      dockerfile: Dockerfile
+    container_name: appointment_co_ms
+    ports:
+      - "3004:3004"
+    environment:
+      PORT: 3004
+      KAFKA_GROUP_ID: appointment_group_co_ms
+    env_file:
+      - env/mysql.env
+      - env/ms.env
+      - env/kafka.env
+    depends_on:
+      mysql-server:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:3004/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_interval: 3s
+    networks:
+      - net-ms
+
+  appoinment_mx_ms:
+    image: appointment_mx_ms
+    build:
+      context: ./06-appointment-mx
+      dockerfile: Dockerfile
+    container_name: appointment_mx_ms
+    ports:
+      - "3005:3005"
+    environment:
+      PORT: 3005
+      KAFKA_GROUP_ID: appointment_group_mx_ms
+    env_file:
+      - env/mysql.env
+      - env/ms.env
+      - env/kafka.env
+    depends_on:
+      mysql-server:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:3005/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_interval: 3s
+    networks:
+      - net-ms
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.5.3
+    container_name: zookeeper
+    hostname: zookeeper
+    restart: unless-stopped
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+    healthcheck:
+      test: nc -z localhost 2181 || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_interval: 5s
+    networks:
+      - net-ms
+
+  kafka:
+    image: confluentinc/cp-kafka
+    container_name: kafka
+    restart: unless-stopped
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    healthcheck:
+      test: kafka-topics --bootstrap-server kafka:9092 --list
+      interval: 10s
+      timeout: 10s
+      retries: 15
+      start_interval: 10s
+    ports:
+      - 9092:9092
+    networks:
+      - net-ms
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    restart: unless-stopped
+    depends_on:
+      kafka:
+        condition: service_healthy
+    ports:
+      - 8082:8080
+    environment:
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+    # healthcheck:
+    #   test: ["CMD", "curl", "http://localhost:8080"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 3
+    #   start_interval: 3s
     networks:
       - net-ms
 

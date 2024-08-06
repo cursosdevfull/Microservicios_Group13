@@ -1,4 +1,4 @@
-post http://localhost:3020/appointment
+post http://localhost:3002/appointment
 Content-Type: application/json
 
 {
@@ -6,18 +6,11 @@ Content-Type: application/json
   "patientId": "a08b996f-8247-4bb9-94a9-55ba0daf8b15",
   "centerId": "64540b0c-3ae3-4b88-8491-5d064563e098",
   "specialtyId": "8f6a08d8-fb69-400b-aa55-ef89f484dd51",
-  "appointmentDate": "2024-05-05",
+  "appointmentDate": "2024-08-15",
   "appointmentTime": "10:00",
-  "appointmentStatus": "pending",
+  "appointmentStatus": "PENDING",
   "country": "MX"
 }
 
-###
-post http://localhost:3000/user/get-by-email
-Content-Type: application/json
-
-{
-    "email": "prueba@email.com"
-}
 
 

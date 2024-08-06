@@ -1,20 +1,28 @@
 import "reflect-metadata";
 
 import { app } from "./app";
+import { BrokerBootstrap } from "./bootstrap/broker.bootstrap";
 import { DatabaseBootstrap } from "./bootstrap/database.bootstrap";
 import { ServerBootstrap } from "./bootstrap/server.bootstrap";
+import { ListenAppointmentApplication } from "./modules/appointment/application/listen-kafka.application";
+import { AppointmentInfrastructure } from "./modules/appointment/infrastructure/appointment.infrastructure";
 
 const serverBootstrap = new ServerBootstrap(app);
 const databaseBootstrap = new DatabaseBootstrap();
+const kafkaBootstrap = new BrokerBootstrap();
 
 (async () => {
   const listPromises = [
     serverBootstrap.initialize(),
     databaseBootstrap.initialize(),
+    kafkaBootstrap.initialize(),
   ];
 
   try {
     await Promise.all(listPromises);
+    const repository = new AppointmentInfrastructure();
+    const application = new ListenAppointmentApplication(repository);
+    await application.run();
   } catch (error) {
     console.error(error);
     process.exit(1);

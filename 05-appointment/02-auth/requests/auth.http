@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-post http://localhost:3010/auth/login
+post http://localhost:3001/auth/login
 Content-Type: application/json
 
 {

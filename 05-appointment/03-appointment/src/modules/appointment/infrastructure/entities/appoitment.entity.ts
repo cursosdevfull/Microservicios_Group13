@@ -28,4 +28,7 @@ export class AppointmentEntity {
 
   @Column({ type: "timestamp" })
   createdAt: Date;
+
+  @Column({ type: "timestamp", nullable: true })
+  updatedAt: Date;
 }

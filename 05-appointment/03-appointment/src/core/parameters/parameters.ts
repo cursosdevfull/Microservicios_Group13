@@ -40,4 +40,37 @@ export class Parameters {
         : 1000,
     };
   }
+
+  static get kafkaConfig() {
+    return {
+      clientId: process.env.KAFKA_CLIENT_ID || "my-client-id",
+      brokers: process.env.KAFKA_BROKERS
+        ? process.env.KAFKA_BROKERS.split(",")
+        : ["localhost:9092"],
+    };
+  }
+
+  static get kafkaGroupId() {
+    return process.env.KAFKA_GROUP_ID || "appointment_group_ms";
+  }
+
+  static get kafkaTopicPE() {
+    return process.env.KAFKA_TOPIC_PE || "topic-pe";
+  }
+
+  static get kafkaTopicCO() {
+    return process.env.KAFKA_TOPIC_CO || "topic-co";
+  }
+
+  static get kafkaTopicMX() {
+    return process.env.KAFKA_TOPIC_MX || "topic-mx";
+  }
+
+  static get kafkaTopicRollout() {
+    return process.env.KAFKA_TOPIC_ROLLOUT || "my-topic-rollout";
+  }
+
+  static get kafkaTopicStatus() {
+    return process.env.KAFKA_TOPIC_STATUS || "topic-status";
+  }
 }

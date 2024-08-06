@@ -27,6 +27,7 @@ export class Appointment {
   private appointmentStatus: string;
   private country: string;
   private createdAt: Date;
+  private updatedAt: Date | undefined;
 
   constructor(props: AppointmentProperties) {
     Object.assign(this, props);
@@ -44,6 +45,12 @@ export class Appointment {
       appointmentStatus: this.appointmentStatus,
       country: this.country,
       createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
     };
+  }
+
+  update(status: string) {
+    this.appointmentStatus = status;
+    this.updatedAt = new Date();
   }
 }
