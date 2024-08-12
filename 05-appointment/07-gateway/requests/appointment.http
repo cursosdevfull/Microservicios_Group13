@@ -1,16 +1,16 @@
-post http://localhost:3006/api/appointment
+post http://k8s-default-ingressa-f9307580f5-1616604725.us-east-1.elb.amazonaws.com/api/appointment
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiUHJ1ZWJhIiwiaWF0IjoxNzIyNzM2ODgzLCJleHAiOjE3MjI3NTEyODN9.9TcrniL6aoLCtu42vw2avG257TmyfHS7-mcK29qBoeI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJpYXQiOjE3MjMzNDM2ODMsImV4cCI6MTcyMzM1ODA4M30.vD6SNS9W573nTFf1eo_4ZQ5rr29ew0f5QV0BNkd-1gQ
 
 {
   "appointmentId": "41a07273-ce0b-4969-a43b-88c0231f90f9",
   "patientId": "a08b996f-8247-4bb9-94a9-55ba0daf8b15",
   "centerId": "64540b0c-3ae3-4b88-8491-5d064563e098",
   "specialtyId": "8f6a08d8-fb69-400b-aa55-ef89f484dd51",
-  "appointmentDate": "2024-08-06",
+  "appointmentDate": "2024-08-12",
   "appointmentTime": "10:00",
   "appointmentStatus": "PENDING",
-  "country": "MX"
+  "country": "PE"
 }
 
 

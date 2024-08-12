@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rs-nginx
+  labels:
+    app: appointment
+    env: dev
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: appointment
+      env: dev
+  template:
+    metadata:
+      labels:
+        app: appointment
+        env: dev
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+        - name: sonarqube
+          image: sonarqube:alpine

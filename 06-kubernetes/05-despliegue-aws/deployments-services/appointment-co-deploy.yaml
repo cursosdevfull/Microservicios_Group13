@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appointment-co-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appointment-co-app
+  template:
+    metadata:
+      labels:
+        app: appointment-co-app
+    spec:
+      containers:
+        - name: appointment-co
+          image: 282865065290.dkr.ecr.us-east-1.amazonaws.com/appointment_co_ms
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3004
+          env:
+            - name: PORT
+              value: "3004"
+            - name: KAFKA_GROUP_ID
+              value: "appointment_group_co_ms"
+            - name: MYSQL_DATABASE
+              value: appointment
+            - name: MYSQL_USER
+              value: admin
+            - name: MYSQL_PASSWORD
+              value: 3lgiGAnt32024?
+            - name: DB_HOST
+              value: database-1.cmuv7any6zxa.us-east-1.rds.amazonaws.com
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_SYNC
+              value: "false"
+            - name: DB_LOGGING
+              value: "true"
+            - name: DB_POOL_SIZE
+              value: "10"
+            - name: DB_MAX_QUERY_EXECUTION_TIME
+              value: "1000"
+            - name: KAFKA_CLIENT_ID
+              value: "my-client-id"
+            - name: KAFKA_BROKERS
+              value: "kafka-svc:29092"
+            - name: KAFKA_TOPIC_PE
+              value: "topic-pe"
+            - name: KAFKA_TOPIC_CO
+              value: "topic-co"
+            - name: KAFKA_TOPIC_MX
+              value: "topic-mx"

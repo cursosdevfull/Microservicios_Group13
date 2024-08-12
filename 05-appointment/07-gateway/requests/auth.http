@@ -8,10 +8,10 @@ Content-Type: application/json
 }
 
 ###
-post http://localhost:3006/api/login
+post http://k8s-default-ingressa-f9307580f5-1616604725.us-east-1.elb.amazonaws.com/api/login
 Content-Type: application/json
 
 {
-    "email": "prueba2@email.com",
+    "email": "prueba@email.com",
     "password": "ElGigante2024"
 }

@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { err, ok, Result } from 'neverthrow';
+import axios from "axios";
+import { err, ok, Result } from "neverthrow";
 
-import { ERROR_MESSAGES } from '../../../core/errors/error-base';
-import { Parameters } from '../../../core/parameters/parameters';
-import { AuthRepository } from '../domain/repositories/auth.repository';
-import { AuthDatabaseException } from './exceptions/auth.exception';
+import { ERROR_MESSAGES } from "../../../core/errors/error-base";
+import { Parameters } from "../../../core/parameters/parameters";
+import { AuthRepository } from "../domain/repositories/auth.repository";
+import { AuthDatabaseException } from "./exceptions/auth.exception";
 
 interface IResponseSearchUserByEmail {
   data: {
@@ -25,12 +25,14 @@ export type AuthSearchUserByEmail = Result<
 export class AuthInfrastructure implements AuthRepository {
   async searchUserByEmail(email: string): Promise<AuthSearchUserByEmail> {
     try {
+      console.log(`${Parameters.USER_BACKEND}/user/get-by-email`);
       const response = await axios.post(
         `${Parameters.USER_BACKEND}/user/get-by-email`,
         { email }
       );
       return ok(response.data);
     } catch (error: any) {
+      console.log(error);
       return err(
         new AuthDatabaseException(
           "Error to search user by email",

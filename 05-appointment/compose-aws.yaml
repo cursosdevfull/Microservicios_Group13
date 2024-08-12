@@ -40,7 +40,7 @@ services:
       - net-ms
 
   user_ms:
-    image: user_ms
+    image: 282865065290.dkr.ecr.us-east-1.amazonaws.com/user_ms
     build:
       context: ./01-user
       dockerfile: Dockerfile
@@ -65,7 +65,7 @@ services:
       - net-ms
 
   auth_ms:
-    image: auth_ms
+    image: 282865065290.dkr.ecr.us-east-1.amazonaws.com/auth_ms
     build:
       context: ./02-auth
       dockerfile: Dockerfile
@@ -90,8 +90,8 @@ services:
     networks:
       - net-ms
 
-  appointment_ms:
-    image: appointment_ms
+  appoinment_ms:
+    image: 282865065290.dkr.ecr.us-east-1.amazonaws.com/appointment_ms
     build:
       context: ./03-appointment
       dockerfile: Dockerfile
@@ -119,8 +119,8 @@ services:
     networks:
       - net-ms
 
-  appointment_pe_ms:
-    image: appointment_pe_ms
+  appoinment_pe_ms:
+    image: 282865065290.dkr.ecr.us-east-1.amazonaws.com/appointment_pe_ms
     build:
       context: ./04-appointment-pe
       dockerfile: Dockerfile
@@ -148,8 +148,8 @@ services:
     networks:
       - net-ms
 
-  appointment_co_ms:
-    image: appointment_co_ms
+  appoinment_co_ms:
+    image: 282865065290.dkr.ecr.us-east-1.amazonaws.com/appointment_co_ms
     build:
       context: ./05-appointment-co
       dockerfile: Dockerfile
@@ -177,8 +177,8 @@ services:
     networks:
       - net-ms
 
-  appointment_mx_ms:
-    image: appointment_mx_ms
+  appoinment_mx_ms:
+    image: 282865065290.dkr.ecr.us-east-1.amazonaws.com/appointment_mx_ms
     build:
       context: ./06-appointment-mx
       dockerfile: Dockerfile
@@ -207,7 +207,7 @@ services:
       - net-ms
 
   gateway:
-    image: gateway
+    image: 282865065290.dkr.ecr.us-east-1.amazonaws.com/gateway
     build:
       context: ./07-gateway
       dockerfile: Dockerfile

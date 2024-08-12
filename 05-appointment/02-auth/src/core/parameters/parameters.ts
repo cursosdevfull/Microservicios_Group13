@@ -22,11 +22,13 @@ export class Parameters {
 
   static get dbConfig(): IDatabaseConfig {
     return {
-      host: process.env.DB_HOST || "localhost",
+      host:
+        process.env.DB_HOST ||
+        "database-1.cmuv7any6zxa.us-east-1.rds.amazonaws.com",
       port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
       entities: [],
-      username: process.env.MYSQL_USER || "root",
-      password: process.env.MYSQL_PASSWORD || "root",
+      username: process.env.MYSQL_USER || "admin",
+      password: process.env.MYSQL_PASSWORD || "3lgiGAnt32024?",
       database: process.env.MYSQL_DATABASE || "appointment",
       synchronize: process.env.DB_SYNC === "true" || true,
       logging: process.env.DB_LOGGING === "true" || false,

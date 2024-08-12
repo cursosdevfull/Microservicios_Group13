@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-nginx
+  labels:
+    app: appointment
+    env: dev
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: appointment
+      env: dev
+  template:
+    metadata:
+      labels:
+        app: appointment
+        env: dev
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
